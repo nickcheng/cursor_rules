@@ -1,0 +1,13 @@
+---
+description: Project‑wide naming conventions to keep files, variables, and messages consistent and discoverable.
+globs: **/*.{js,ts,html,css}
+---
+- **Files**: lowercase with underscores (`content_script.ts`, `popup_view.tsx`); avoid camelCase in filenames.
+- **Variables & Functions**: camelCase (`isExtensionEnabled`, `fetchUserSettings`).
+- **Types & Interfaces**: PascalCase (`UserSettings`, `TabMessage`).
+- **Enums**: PascalCase singular (`StorageArea`, `PermissionType`).
+- **Constants**: UPPER_SNAKE_CASE (`MAX_RETRY_COUNT`); export‑level only.
+- **Message Channels** (`chrome.runtime.sendMessage`): `kebab-case` strings (`init-options`, `toggle-blocker`).
+- Prefix test files with the unit under test (`storage.service.test.ts`).
+- Mirror directory structure between **src/** and **test/** (`src/background/ → test/background/`).
+- Apply the same conventions to CSS utility classes when not using Tailwind (@apply remains camelCase).
