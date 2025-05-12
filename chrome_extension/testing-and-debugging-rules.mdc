@@ -1,0 +1,16 @@
+---
+description: Rules for writing automated tests and performing effective debugging for Chrome extensions.
+globs: **/*.{js,ts}
+---
+- Write unit tests for all core logic using a lightweight framework such as Vitest or Jest.
+- Prefer dependency‑injection and pure functions to make code easily testable.
+- Mock Chrome APIs with dedicated helpers (e.g., chrome-mock) to isolate logic from the browser runtime.
+- Use integration tests for message‑passing flows between background, content, and UI scripts.
+- Leverage Chrome DevTools:  
+  - “Service Workers” panel for background/service worker inspection.  
+  - “Sources → Overrides” for live‑edit testing.  
+- Add `console.error` / `chrome.runtime.lastError` assertions in tests to ensure error paths are covered.
+- Enable `sourceMap: true` in the bundler for accurate stack traces.
+- Gate expensive logging behind a `process.env.NODE_ENV !== 'production'` check to avoid performance impact in release builds.
+- Require 100 % branch coverage on security‑sensitive utilities (sanitizers, permissions checks).
+- Document known test fixtures in `/test/__fixtures__` with clear naming (`tabs-opened.json`, etc.).
