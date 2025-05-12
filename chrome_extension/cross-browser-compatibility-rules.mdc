@@ -1,0 +1,13 @@
+---
+description: Rules for ensuring the extension works reliably across Chrome, Edge, Firefox, and other Chromium‑based browsers.
+globs: **/*.{js,ts,html}
+---
+- Use the WebExtensions API subset wherever possible; avoid Chrome‑only APIs unless absolutely required.
+- Detect browser vendor at runtime with `const browser = chrome || (globalThis as any).browser`.
+- Guard vendor‑specific features behind capability checks (`if (chrome?.scripting) { … }`).
+- Keep the manifest at **v3** and validate with both Chrome and Firefox linter tools before release.
+- Avoid proprietary CSS prefixes; rely on standard Flexbox / Grid properties.
+- Do **not** assume the presence of `chrome.storage.sync`—provide a local fallback for browsers that disable it.
+- Test alarms and notifications on at least Chrome Stable, Edge Stable, and Firefox Latest ESR each release cycle.
+- Provide polyfills (e.g., `browser-polyfill`) only as a dev‑dependency; tree‑shake them from production bundles.
+- Maintain a `/compatibility.md` changelog noting any newly introduced vendor quirks and their work‑arounds.
