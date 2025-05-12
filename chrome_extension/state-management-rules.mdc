@@ -1,0 +1,13 @@
+---
+description: Guidelines for reliably storing, retrieving, and synchronizing extension state.
+globs: **/*.{js,ts}
+---
+- Use `chrome.storage.sync` for lightweight, user‑scoped preferences (<100 KB); fall back to `chrome.storage.local` when sync quota reached.
+- Prefix all keys with a constant namespace (`'myext_'`) to avoid collisions with other extensions.
+- Expose state operations through a dedicated `storage.service.ts` module; do not call Chrome Storage APIs directly elsewhere.
+- Batch multiple writes in a single `chrome.storage.sync.set` call to reduce I/O.
+- Listen to `chrome.storage.onChanged` in background and UI contexts to propagate real‑time updates.
+- For transient runtime data (e.g., currently blocked tab IDs), use an in‑memory reactive store (e.g., tiny‑signal or Zustand) instead of persistent storage.
+- Encrypt sensitive values (tokens, user content) with the Web Crypto API before persisting; store the salt/iv alongside the cipher text.
+- Version your persisted schema (`schemaVersion`) and perform migrations on install/update via `chrome.runtime.onInstalled`.
+- Always wrap storage calls in `try … catch` and surface user‑friendly error messages through the UI.
