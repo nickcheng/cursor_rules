@@ -1,0 +1,12 @@
+---
+description: Rules governing bundling, versioning, and releasing the Chrome extension.
+globs: **/manifest.json
+---
+- Use an automated build pipeline (e.g., pnpm + Vite + crxjs) to output a signed `.crx` and an unpacked `/dist`.
+- Increment `manifest.version` **patch** automatically on every CI build; `minor` for features, `major` for breaking permission changes.
+- Generate a deterministic content hash for bundled assets and reference via `import.meta.url` where needed.
+- Validate the final manifest against `chrome://extensions/?errors` **and** `web-ext lint` for Firefox before tagging a release.
+- Embed the exact Git commit SHA in `manifest.version_name` for traceability.
+- Run `npm audit` and `pnpm dlx license-checker` in CI; fail build on high‑severity vulnerabilities or unapproved licenses.
+- Produce a signed change‑log (`CHANGELOG.md`) with every Git tag following Conventional Commits.
+- Attach the zipped `dist/` artifact to the GitHub Release; publish to Chrome Web Store & AMO using respective upload CLIs.
